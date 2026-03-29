@@ -1,0 +1,63 @@
+O cenário atual do Direito e a Tecnologia A presente proposta nasce na disciplina de Inteligência Artificial: Fundamentos, Aplicações e Impactos Profissionais, com o objetivo de demonstrar como as ferramentas de Modelos de Linguagem de Grande Escala (LLMs) podem ser aplicadas de forma ética e eficiente no campo do Direito do Trabalho.
+O que é o trabalho? O grupo GuardTech Solutions desenvolveu um projeto conceitual de consultoria e suporte jurídico inicial focado em um dos problemas mais persistentes das relações trabalhistas brasileiras: o assédio moral e sexual. Este trabalho não visa a substituição do advogado, mas sim o uso da IA como uma ponte de acesso à informação e à justiça.
+A Proposta Sugerida: O AppGuard Nossa sugestão central é a criação do conceito AppGuard, uma plataforma inteligente projetada para acolher relatos de trabalhadores em situação de vulnerabilidade. Através de engenharia de prompt avançada, a solução proposta é capaz de:
+    1. Humanizar o atendimento: Receber relatos livres e oferecer uma resposta empática.
+    2. Identificar Tipificações: Classificar o relato com base na CLT e no Código Penal.
+Gerar Documentação: Estruturar um "esqueleto" de denúncia para facilitar o trabalho de advogados e órgãos competentes como o MPT.
+Abaixo, detalhamos o diagnóstico do problema, as ferramentas de IA selecionadas e o fluxo lógico de funcionamento deste ecossistema digital.
+
+
+PASSO 1 - Formação do Grupo (Empresa de Consultoria)
+    • Nome da Empresa Fictícia: GuardTech Solutions
+    • Integrantes e Funções:
+        1. Analista de Problema Profissional: Livio Bernardo (Direito) - Responsável pela base legal (CLT/CP).
+        2. Especialista em IA e Prompt: Mara Silva de Lacerda (Direito) - Responsável pela engenharia de prompts jurídicos.
+        3. Arquiteto do Workflow: Luisa Rosangela (Direito) - Responsável pelo fluxo lógico da solução.
+        4. Analista de Ética e Impactos: Auleni Maria (Direito) - Responsável pela conformidade e riscos.
+PASSO 2 - Escolha do Problema Profissional
+    • Área: Direito do Trabalho.
+    • Descrição: A dificuldade de vítimas de assédio (moral ou sexual) em identificar juridicamente os abusos sofridos e a consequente subnotificação desses casos aos órgãos competentes devido ao medo e à falta de orientação técnica imediata.
+PASSO 3 - Importância do Problema
+    • Relevância: O assédio compromete a dignidade da pessoa humana e a saúde mental do trabalhador. Juridicamente, a falta de provas e o desconhecimento dos artigos 483 da CLT e 216-A do Código Penal dificultam a busca por reparação e permitem a continuidade de condutas ilícitas no ambiente corporativo.
+PASSO 4 - Hipótese de Uso da IA
+    • Como a IA ajuda: A proposta utiliza LLMs (Modelos de Linguagem de Grande Escala) para atuar como uma camada de triagem. A IA interpretará o relato da vítima, classificará a possível infração e informará quais direitos foram violados, servindo como um "primeiro passo" educativo antes da consultoria com um advogado humano.
+
+PASSO 5 - Ferramentas Selecionadas e Ilustrações de Conceito
+    • Ferramentas:  Gemini (para lógica e classificação) e Claude (para refinamento ético).
+    • Visualização do Conceito:
+        ◦ Ilustração 1 (O Layout): Abaixo, apresentamos a interface sugerida do AppGuard, mostrando o campo de relato e a simplicidade do design para garantir acessibilidade à vítima.
+
+
+
+
+Ilustração 2 (Armazenamento e Inteligência): Esta imagem demonstra a infraestrutura de processamento onde a IA analisa o texto jurídico como as informações são organizadas de forma segura e privada.
+Adicione um item sobre a ferramenta de anonimização:
+    • Camada de Anonimização (Morfologia): Antes do relato chegar a API de classificação dos dados no Gemini ou Claude, o sistema utiliza uma camada de filtragem para substituir nomes próprios, CPFs e nomes de empresas por etiquetas genéricas (ex: "[NOME_CONFIDENCIAL]", "[EMPRESA_X]"). Isso garante que a IA processe o fato jurídico sem conhecer a identidade real.
+
+
+
+
+PASSO 6 - Planejamento do Workflow (Fluxo de Ideia)
+    1. Entrada: Usuário insere um relato livre sobre o ocorrido.
+    2. Análise de IA: O sistema aplica prompts específicos para identificar padrões de assédio moral ou sexual.
+    3. Anonimização Automática (O Canal): O sistema detecta e mascara dados sensíveis que identificam o usuário ou o agressor.
+    4. Análise de IA: A LLM recebe apenas o relato anonimizado para identificar padrões de assédio.
+
+PASSO 7 - Exemplos de Prompts Estratégicos
+(Estes são os exemplos reais que a equipe de "Direito" usaria para configurar a IA do projeto)
+    1. Prompt de Triagem: "Atue como um especialista em Direito do Trabalho e identifique no relato a seguir indícios de assédio moral conforme o Art. 483 da CLT."
+    2. Prompt de Orientação: "Explique para uma pessoa leiga, com tom empático, quais são as garantias da Lei 14.457/2022 em casos de violência de gênero."
+    3. Prompt de Sumarização: "Estruture os fatos narrados em um resumo técnico para facilitar a futura análise por um advogado."
+
+
+
+PASSO 8 - Análise de Riscos e Ética
+    • Limitações: A IA pode apresentar alucinações (citar leis erradas). Portanto, o projeto prevê um aviso obrigatório: "Esta análise é meramente informativa e não substitui o parecer de um advogado".
+Privacidade: Dados de assédio são sensíveis; a proposta exige o uso de criptografia e anonimização de nomes para proteger as partes envolvidas.
+
+
+
+Considerações Finais do Grupo A elaboração deste projeto permitiu à equipe GuardTech Solutions compreender que a Inteligência Artificial, quando aplicada com rigor ético e estratégia jurídica, deixa de ser apenas uma ferramenta de automação para se tornar um vetor de cidadania. O conceito do AppGuard demonstra que é possível reduzir a distância entre a vítima de assédio e o Poder Judiciário, utilizando a tecnologia para quebrar o ciclo do silêncio e da desinformação.
+Concluímos que a implementação de LLMs no cotidiano jurídico exige vigilância constante sobre riscos de vieses e alucinações, reforçando a premissa de que a IA deve atuar como um copiloto do advogado, e nunca como seu substituto. Através deste workflow planejado, entregamos uma solução que prioriza o acolhimento, a conformidade legal e a eficiência na triagem de conflitos trabalhistas, preparando o terreno para uma prática jurídica mais moderna, ágil e, acima de tudo, humana.
+
+
