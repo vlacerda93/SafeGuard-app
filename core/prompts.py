@@ -15,9 +15,7 @@ Responda apenas em Português brasileiro.
 TRIAAGEM_PROMPT = """
 Analise o relato: {relato}
 
-1. Probabilidade % de assédio moral/sexual (0-100%).
-2. Evidências chave (lista).
-3. Artigos violados.
+Forneça uma análise técnica detalhada abordando os possíveis direitos violados e os artigos da legislação brasileira que se aplicam a este caso.
 """
 
 ESQUELETO_PROMPT = """

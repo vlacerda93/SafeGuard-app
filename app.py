@@ -25,7 +25,7 @@ with st.sidebar:
     *Não substitui advogado.*
     """)
     st.markdown("[Art. 483 CLT](https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art483)")
-    st.markdown("[Lei 14.457/2022](https://www.planalto.gov.br)")
+    st.markdown("[Lei 14.457/2022 (Combate ao Assédio)](https://www.aurum.com.br/blog/lei-14457-22/)")
     
     if st.button("🗑️ Limpar Histórico", key="clear"):
         st.cache_data.clear()
@@ -67,31 +67,26 @@ if prompt := st.chat_input("Descreva o ocorrido..."):
         st.info("Este rascunho foi gerado para facilitar sua conversa com um advogado.")
         st.markdown(esqueleto)
         
-        # Dashboard de Análise (Baseado na Ilustração 2 do PDF)
-        col1, col2 = st.columns([2,1])
-        with col1:
-            st.write("**Evidências detectadas:**")
-            evidencias = ["Humilhação pública", "Isolamento", "Gritos"]
-            for ev in evidencias:
-                st.checkbox(ev, value=True, key=f"ev_{ev}_{len(st.session_state.messages)}")
-        
-        with col2:
-            st.metric("Probabilidade Assédio", "75%", "↑ Análise IA")
-        
-        # Exportação para PDF (Corrigido para fpdf2)
+
+        # Exportação para PDF (Corrigido para fpdf2/Streamlit)
         try:
             pdf = FPDF()
             pdf.add_page()
             pdf.set_font("Helvetica", size=12) 
             pdf.cell(200, 10, txt="AppGuard - GuardTech Solutions", ln=1, align="C")
             pdf.ln(10)
-            pdf.multi_cell(0, 10, txt=esqueleto)
             
-            pdf_output = pdf.output() # No fpdf2 o output() retorna bytes por padrão
+            # Garante que o texto seja compatível com Latin-1 para evitar erros de caracteres no FPDF
+            texto_pdf = esqueleto.encode('latin-1', 'replace').decode('latin-1')
+            pdf.multi_cell(0, 10, txt=texto_pdf)
+            
+            pdf_output = pdf.output()
+            # O Streamlit exige bytes, fpdf2 retorna bytearray às vezes
+            pdf_bytes = bytes(pdf_output) if isinstance(pdf_output, (bytearray, bytes)) else pdf_output
             
             st.download_button(
                 label="📥 Baixar Esqueleto da Denúncia (PDF)",
-                data=pdf_output,
+                data=pdf_bytes,
                 file_name=f"denuncia_{datetime.now().strftime('%Y%m%d_%H%M')}.pdf",
                 mime="application/pdf"
             )
