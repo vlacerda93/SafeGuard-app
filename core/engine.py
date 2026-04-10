@@ -11,7 +11,21 @@ import streamlit as st
 from core.prompts import SYSTEM_PROMPT, TRIAAGEM_PROMPT, ESQUELETO_PROMPT
 
 # load_dotenv() - Não é necessário no Streamlit Cloud
-client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+try:
+    if "GROQ_API_KEY" in st.secrets:
+        client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+    else:
+        # Tenta pegar das variáveis de ambiente como fallback
+        import os
+        key = os.getenv("GROQ_API_KEY")
+        if key:
+            client = Groq(api_key=key)
+        else:
+            client = None
+            st.error("🚨 ERRO: A chave 'GROQ_API_KEY' não foi encontrada nos Secrets do Streamlit.")
+except Exception as e:
+    client = None
+    st.error(f"🚨 ERRO ao inicializar Groq: {e}")
 
 def carregar_doutrina():
     """
