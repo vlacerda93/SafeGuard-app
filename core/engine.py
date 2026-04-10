@@ -7,10 +7,11 @@ import re
 from datetime import datetime
 from dotenv import load_dotenv
 from groq import Groq
+import streamlit as st
 from core.prompts import SYSTEM_PROMPT, TRIAAGEM_PROMPT, ESQUELETO_PROMPT
 
-load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# load_dotenv() - Não é necessário no Streamlit Cloud
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 def carregar_doutrina():
     """
