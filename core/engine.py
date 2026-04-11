@@ -22,7 +22,8 @@ try:
             client = Groq(api_key=key)
         else:
             client = None
-            st.error("🚨 ERRO: A chave 'GROQ_API_KEY' não foi encontrada nos Secrets do Streamlit.")
+            st.error("🚨 ERRO: A chave 'GROQ_API_KEY' não foi encontrada.")
+            st.write("🔍 **Chaves detectadas nos Secrets:**", list(st.secrets.keys()))
 except Exception as e:
     client = None
     st.error(f"🚨 ERRO ao inicializar Groq: {e}")
