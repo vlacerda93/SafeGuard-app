@@ -22,11 +22,17 @@ try:
             client = Groq(api_key=key)
         else:
             client = None
-            st.error("🚨 ERRO: A chave 'GROQ_API_KEY' não foi encontrada.")
-            st.write("🔍 **Chaves detectadas nos Secrets:**", list(st.secrets.keys()))
+            st.warning("⚠️ Configuração Pendente")
+            st.error("🚨 A chave 'GROQ_API_KEY' não foi encontrada nos Secrets.")
+            st.write("Para resolver, vá em **Settings > Secrets** no Streamlit Cloud e cole:")
+            st.code('GROQ_API_KEY = "sua_chave_aqui"', language="toml")
+            st.write("---")
+            st.write("🔍 **Diagnóstico técnico (Chaves lidas):**", list(st.secrets.keys()))
+            st.stop() # INTERROMPE O APP AQUI PARA NÃO DAR O ERRO DO CLIENTE
 except Exception as e:
     client = None
-    st.error(f"🚨 ERRO ao inicializar Groq: {e}")
+    st.error(f"🚨 ERRO CRÍTICO ao inicializar Groq: {e}")
+    st.stop()
 
 def carregar_doutrina():
     """
