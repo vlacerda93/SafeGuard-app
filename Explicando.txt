@@ -1,0 +1,75 @@
+# SYSTEM PROMPT: SAFEGUARD AI v2.0
+## OBJECTIVE
+You are a Legal UX Specialist & Labor Law expert. Your mission is to assist workers in identifying harassment using Brazilian Law 14.457/2022.
+
+## BEHAVIORAL PROTOCOL
+1. INTENT RECOGNITION (CRITICAL):
+   - If user input is an abstract question (e.g., "What is moral harassment?"), act as an EDUCATOR. Provide a concise, conceptual definition. 
+   - If user input is a personal story/fact, act as a TECHNICAL ANALYST.
+
+2. TERMINOLOGY SHIFT:
+   - REPLACE "Acolhimento Empático" WITH "Initial Assessment" or "Contextual Overview".
+   - Avoid pessimistic tones. Be objective, supportive, and professional.
+
+3. OUT-OF-SCOPE HANDLING:
+   - If the user talks about topics unrelated to labor law or harassment, respond briefly: "I am specialized in workplace harassment and labor rights. How can I help you with those specific topics?"
+   - Provide a "Did you know?" example to guide them back (e.g., "Example: 'My boss calls me names in front of everyone every day. Is this harassment?'").
+
+4. STRUCTURE:
+   - Always include the probability of harassment if a story is told.
+   - Always include the mandatory Legal Disclaimer.
+2. Modern UI Implementation (Reflex/Tailwind)
+Para o Reflex, vamos focar no conceito de State Management para alternar entre a tela de "Folder/Onboarding" e o Chat.
+
+A. The "Folder" Component (Onboarding)
+Use rx.vstack com um fundo de vidro (Glassmorphism) para explicar o app.
+
+Python
+# Sugestão de UI para o Onboarding em Reflex
+def onboarding_screen():
+    return rx.center(
+        rx.vstack(
+            rx.heading("🛡️ SafeGuard", size="9", color="white"),
+            rx.text("Your safe space for labor rights analysis.", color="gray.400"),
+            rx.divider(),
+            rx.hstack(
+                info_card("Private", "No login, no logs.", "shield"),
+                info_card("Expert", "Based on Law 14.457/2022.", "scale"),
+                info_card("Anonymous", "Your data is deleted instantly.", "user-x"),
+                spacing="4",
+            ),
+            rx.button(
+                "Start Secure Session",
+                on_click=State.start_chat,
+                size="4",
+                variant="solid",
+                color_scheme="violet",
+                cursor="pointer",
+            ),
+            bg="rgba(30, 41, 59, 0.7)", # Slate 800 with transparency
+            backdrop_filter="blur(12px)",
+            padding="40px",
+            border_radius="24px",
+            border="1px solid rgba(255, 255, 255, 0.1)",
+        ),
+        height="100vh",
+        background="radial-gradient(circle at top, #1e293b, #0f172a)", # 2026 Dark Gradient
+    )
+B. Visual Improvements (UI 2026)
+Colors: Use a escala do Tailwind slate-900 para o fundo e violet-600 para ações principais.
+
+The "Reset" Button: No Reflex, chame de Reset Session e use um rx.icon de "trash" ou "rotate-ccw".
+
+Chat Bubbles: Use bordas bem arredondadas (border_radius="20px") e diferencie a cor do bot (Slate 800) e do usuário (Violet 600).
+
+3. Implementation Steps (The "To-Do" List)
+State Logic: Crie uma variável State.has_started: bool = False. No seu index, use um rx.cond(State.has_started, chat_ui(), onboarding_screen()).
+
+Refined Prompting: Integre o novo System Prompt no seu State.answer (onde você chama o LLM).
+
+Privacy Disclaimer: No Onboarding, deixe claro que o app não tem banco de dados (no-database architecture).
+
+Reset Logic: O botão de reset deve dar um return rx.clear_session() ou resetar todas as variáveis de lista de mensagens do seu estado.
+
+Dica para a resposta do bot:
+Para evitar que ele seja "robótico" demais, peça no prompt para ele usar Bullet Points e Bold text em vez de parágrafos gigantes. Isso torna a leitura muito mais rápida e menos cansativa

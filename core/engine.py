@@ -1,38 +1,22 @@
-"""
-Engine Groq para AppGuard - Versão RAG Robusta
-Foco: Imparcialidade Analítica e Doutrina Jurídica
-"""
 import os
 import re
 from datetime import datetime
 from dotenv import load_dotenv
 from groq import Groq
-import streamlit as st
 from core.prompts import SYSTEM_PROMPT, TRIAAGEM_PROMPT, ESQUELETO_PROMPT
 
-# load_dotenv() - Não é necessário no Streamlit Cloud
-try:
-    if "GROQ_API_KEY" in st.secrets:
-        client = Groq(api_key=st.secrets["GROQ_API_KEY"])
-    else:
-        # Tenta pegar das variáveis de ambiente como fallback
-        import os
-        key = os.getenv("GROQ_API_KEY")
-        if key:
-            client = Groq(api_key=key)
-        else:
-            client = None
-            st.warning("⚠️ Configuração Pendente")
-            st.error("🚨 A chave 'GROQ_API_KEY' não foi encontrada nos Secrets.")
-            st.write("Para resolver, vá em **Settings > Secrets** no Streamlit Cloud e cole:")
-            st.code('GROQ_API_KEY = "sua_chave_aqui"', language="toml")
-            st.write("---")
-            st.write("🔍 **Diagnóstico técnico (Chaves lidas):**", list(st.secrets.keys()))
-            st.stop() # INTERROMPE O APP AQUI PARA NÃO DAR O ERRO DO CLIENTE
-except Exception as e:
-    client = None
-    st.error(f"🚨 ERRO CRÍTICO ao inicializar Groq: {e}")
-    st.stop()
+# Carrega variáveis do arquivo .env se existir
+load_dotenv()
+
+def get_client():
+    """Inicializa o cliente Groq de forma segura."""
+    api_key = os.getenv("GROQ_API_KEY")
+    if not api_key:
+        print("⚠️ A chave 'GROQ_API_KEY' não foi encontrada nas variáveis de ambiente.")
+        return None
+    return Groq(api_key=api_key)
+
+client = get_client()
 
 def carregar_doutrina():
     """
@@ -59,10 +43,12 @@ def analisar_relato(relato):
     """
     Analisa o relato usando RAG injetado para evitar tendenciosidade.
     """
+    if not client:
+        return "Erro: Cliente Groq não inicializado. Verifique a chave de API."
+        
     anon_relato = anonimizar(relato)
     doutrina_texto = carregar_doutrina()
     
-    # Montamos o prompt que obriga a IA a consultar a doutrina antes de opinar
     prompt_analitico = f"""
     VOCÊ DEVE ANALISAR O RELATO ABAIXO À LUZ DA DOUTRINA FORNECIDA.
     
@@ -83,12 +69,15 @@ def analisar_relato(relato):
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": prompt_analitico}
         ],
-        temperature=0.0, # Temperatura ZERO para evitar respostas 'emocionadas'
+        temperature=0.0,
     )
     return response.choices[0].message.content
 
 def gerar_esqueleto(relato, analise):
     """Gera o documento técnico para o PDF."""
+    if not client:
+        return "Erro: Cliente Groq não inicializado."
+        
     data_atual = datetime.now().strftime("%d/%m/%Y")
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
