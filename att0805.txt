@@ -1,0 +1,15 @@
+Para colocar a nova versão do projeto (com o Acolhimento Empático) no ar no Reflex Cloud, siga estes passos no seu terminal, dentro da pasta do projeto (/home/vinicius/Área de trabalho/Faculdade/Projetos/safeguardapp):
+
+1. Ative o ambiente virtual (caso não esteja ativado):
+source venv/bin/activate
+
+2. Atualize a ferramenta de hospedagem do Reflex (se houver atualização pendente):
+pip install --upgrade reflex-hosting-cli
+
+3. Inicie o deploy para a nuvem:
+reflex deploy
+
+4. Caso o sistema pergunte "Do you wish to proceed? (ctl+c to cancel):", apenas digite "y" e aperte Enter.
+   
+5. Aguarde o processo terminar. O terminal vai compilar o código e fazer o upload do projeto para a nuvem. O link final de acesso permanecerá o mesmo:
+https://safeguard-app-neon-wood.reflex.run
