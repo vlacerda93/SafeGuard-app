@@ -1,6 +1,22 @@
 import reflex as rx
-from core.engine import analisar_relato, gerar_esqueleto
+from core.engine import analisar_relato, gerar_esqueleto, validar_relato
+from core.pdf_generator import gerar_pdf_profissional
 import os
+import datetime
+
+def detectar_termos_sensiveis(texto: str) -> list[str]:
+    categorias = {
+        "Assédio Moral": ["humilhação", "xingamento", "gritos", "ameaça", "constrangimento", "pressão", "intimidação", "isolamento", "ridicularizar", "ofensa"],
+        "Assédio Sexual": ["assédio sexual", "toque", "insinuação", "proposta", "câmera", "foto", "importunação", "abuso", "chantagem sexual"],
+        "Discriminação": ["discriminação", "racismo", "preconceito", "gordofobia", "homofobia", "transfobia", "sexismo", "etarismo"],
+        "Saúde Mental": ["ansiedade", "depressão", "síndrome", "burnout", "afastamento", "médico", "psicólogo", "licença", "transtorno"],
+    }
+    encontrados = []
+    texto_lower = texto.lower()
+    for cat, termos in categorias.items():
+        if any(t in texto_lower for t in termos):
+            encontrados.append(cat)
+    return encontrados
 
 class State(rx.State):
     """O estado da aplicação."""
@@ -9,6 +25,27 @@ class State(rx.State):
     current_message: str = ""
     processing: bool = False
     esqueleto: str = ""  # Armazena o resumo/esqueleto da denúncia
+    anonimizar_ativo: bool = True
+    termos_sensiveis: list[str] = []
+
+    def toggle_anonimizar(self, value: bool):
+        self.anonimizar_ativo = value
+
+    def panic_button(self):
+        self.reset_session()
+        return rx.redirect("https://www.google.com")
+
+    async def download_pdf(self):
+        if not self.esqueleto: return
+        pdf_bytes = gerar_pdf_profissional(self.esqueleto)
+        filename = f"safeguard_denuncia_{datetime.datetime.now().strftime('%Y%m%d_%H%M')}.pdf"
+        return rx.download(data=pdf_bytes, filename=filename)
+
+    async def download_txt(self):
+        if not self.esqueleto: return
+        texto = f"SAFEGUARD - ESQUELETO DE DENÚNCIA\n{'='*50}\n\n{self.esqueleto}"
+        filename = f"safeguard_denuncia_{datetime.datetime.now().strftime('%Y%m%d_%H%M')}.txt"
+        return rx.download(data=texto.encode('utf-8'), filename=filename)
 
     def start_chat(self):
         """Muda para a tela de chat."""
@@ -20,6 +57,7 @@ class State(rx.State):
         self.has_started = False
         self.current_message = ""
         self.esqueleto = ""
+        self.termos_sensiveis = []
 
     def handle_key(self, key: str):
         """Trata o pressionamento de teclas no input."""
@@ -37,6 +75,20 @@ class State(rx.State):
         self.current_message = ""
         self.processing = True
         yield
+        
+        # Validation
+        valido, erro = validar_relato(user_msg)
+        if not valido:
+            self.messages.append({"role": "assistant", "content": f"💙 {erro}"})
+            self.processing = False
+            return
+            
+        # Detectar termos sensíveis
+        novos_termos = detectar_termos_sensiveis(user_msg)
+        for t in novos_termos:
+            if t not in self.termos_sensiveis:
+                self.termos_sensiveis.append(t)
+
 
         # Chama a IA de análise
         try:
@@ -72,7 +124,7 @@ def onboarding_screen():
     return rx.center(
         rx.vstack(
             rx.heading("🛡️ SafeGuard", size="9", color="white", margin_bottom="10px"),
-            rx.text("Orientação especializada em direitos do trabalhador.", color="gray.300", size="4"),
+            rx.text("Plataforma destinada a diminuir dúvidas e orientar quanto a casos de assédio.", color="gray.300", size="4"),
             rx.divider(margin_y="20px", border_color="rgba(255, 255, 255, 0.1)"),
             rx.hstack(
                 info_card("Privacidade", "Sem login, sem rastros.", "shield"),
@@ -144,6 +196,14 @@ def chat_ui():
                     variant="soft",
                     cursor="pointer",
                 ),
+                rx.button(
+                    "🚨 Pânico",
+                    on_click=State.panic_button,
+                    color_scheme="red",
+                    variant="solid",
+                    cursor="pointer",
+                    margin_left="10px",
+                ),
                 width="100%",
                 padding="20px",
                 bg="rgba(15, 23, 42, 0.8)",
@@ -177,6 +237,17 @@ def chat_ui():
                 min_height="80px",
                 resize="none",
             ),
+            rx.vstack(
+                rx.switch(
+                    name="anonimizar",
+                    checked=State.anonimizar_ativo,
+                    on_change=State.toggle_anonimizar,
+                    color_scheme="indigo",
+                ),
+                rx.text("Anonimizar", color="gray.400", size="1"),
+                align_items="center",
+                spacing="1"
+            ),
                 rx.button(
                     rx.cond(State.processing, rx.spinner(size="2"), rx.icon("send")),
                     on_click=State.answer,
@@ -188,6 +259,21 @@ def chat_ui():
                 padding="20px",
                 bg="rgba(15, 23, 42, 0.9)",
                 border_top="1px solid rgba(255, 255, 255, 0.1)",
+            ),
+            # Footer: Sensitive Terms
+            rx.cond(
+                State.termos_sensiveis.length() > 0,
+                rx.hstack(
+                    rx.icon("alert-triangle", size=14, color="orange"),
+                    rx.text("Categorias detectadas:", color="gray.400", size="1"),
+                    rx.foreach(
+                        State.termos_sensiveis,
+                        lambda termo: rx.badge(termo, color_scheme="orange", size="1")
+                    ),
+                    padding="10px",
+                    bg="rgba(15, 23, 42, 0.9)",
+                    width="100%",
+                ),
             ),
             flex="2",
             height="100vh",
@@ -204,7 +290,13 @@ def chat_ui():
                         color="gray.300",
                         font_size="0.9rem",
                     ),
-                    height="100%",
+                    height="calc(100vh - 120px)",
+                ),
+                rx.hstack(
+                    rx.button("📥 PDF", on_click=State.download_pdf, color_scheme="indigo", size="2", cursor="pointer", width="50%"),
+                    rx.button("📄 TXT", on_click=State.download_txt, color_scheme="gray", size="2", cursor="pointer", width="50%"),
+                    width="100%",
+                    padding_top="10px"
                 ),
                 bg="rgba(30, 41, 59, 0.7)",
                 backdrop_filter="blur(10px)",

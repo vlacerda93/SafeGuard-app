@@ -1,0 +1,19 @@
+Ideias e Sugestões para Melhorar o SafeGuard
+Já que a base do projeto está sólida e funcionando muito bem (o design está limpo no Reflex e a IA está respondendo bem), aqui estão 5 sugestões de como podemos elevar o nível dessa aplicação e deixá-la ainda mais incrível e funcional para usuários reais:
+
+1. Botão de "Saída Rápida" (Panic Button) Como o aplicativo trata de denúncias de ambiente de trabalho (e a pessoa pode estar usando o app no computador da empresa), é padrão de ouro em UX de aplicativos sensíveis ter um botão flutuante discreto de "Saída Rápida" (ou "Sair de Emergência") que, ao ser clicado ou ao apertar o botão "ESC", apaga todo o histórico da tela na mesma hora e redireciona a página para o Google.
+
+2. Exportação do "Esqueleto da Denúncia" em PDF Vejo que você tem um prompt de ESQUELETO_PROMPT. Uma excelente funcionalidade seria permitir que, ao final da conversa, o usuário clique em um botão "Baixar Resumo do Caso". O sistema pegaria esse esqueleto e geraria um documento PDF bem formatado, pronto para o trabalhador levar para um advogado trabalhista, para o MPT ou para o RH.
+
+3. Entrevista Guiada (Fluxo Passo a Passo) Em vez de depender do usuário escrever tudo em um prompt livre de uma vez, poderíamos criar uma primeira etapa com perguntas rápidas (botões):
+
+Quem foi o autor do assédio? (Chefe, Colega, Cliente)
+Com que frequência isso ocorre? (Aconteceu uma vez, Acontece toda semana)
+Você tem provas? (Sim, Não, Não sei) Isso formaria um "pré-contexto" excelente para enviar para a IA junto com o relato escrito, gerando respostas mil vezes mais precisas do lado jurídico.
+4. Dicionário Jurídico via Tooltips (Textos que flutuam) A IA pode ocasionalmente usar termos como "Rescisão Indireta" ou "Poder Diretivo" (como no teste que fizemos). Podemos implementar uma função onde termos legais importantes ficam sublinhados, e se o usuário passar o mouse (ou clicar) em cima, aparece um balãozinho explicando o que significa em português super simples.
+
+5. Integração com um "RAG" (Base de Conhecimento com Leis) Em vez de contar com a memória da IA sobre as leis, poderíamos alimentar o projeto com os arquivos PDF da CLT atualizada e da cartilha de Assédio Moral do TST. Assim, antes de responder, a IA consulta a base real de leis e cita exatamente a fonte (ex: "De acordo com o Artigo 483 da CLT..."), garantindo 100% de segurança jurídica na resposta sem risco de alucinação da IA.
+
+O que achou dessas ideias? Tem alguma que te chama mais atenção e que você gostaria de tentar implementar agora ou no futuro?
+
+

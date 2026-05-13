@@ -1,0 +1,17 @@
+# SafeGuard v2.0 - Dependências
+# Instale com: pip install -r requirements.txt
+
+# Interface Web
+streamlit>=1.35.0
+
+# LLM Provider
+groq>=0.9.0
+
+# Geração de PDF (principal - melhor suporte Unicode)
+reportlab>=4.0.0
+
+# Geração de PDF (fallback)
+fpdf2>=2.7.0
+
+# Utilitários (já incluídos no Python, mas listados para clareza)
+# os, re, hashlib, logging, datetime, io — stdlib, não precisam instalar

@@ -1,0 +1,301 @@
+/* ============================================
+   SafeGuard - Interface Visual v2.0
+   Design: Acolhedor, Profissional, Acessível
+   Paleta: Azul confiança + Verde segurança
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
+
+/* ── Variáveis de Design ── */
+:root {
+    --azul-escuro:    #0f2744;
+    --azul-medio:     #1a3a5c;
+    --azul-claro:     #2563eb;
+    --azul-suave:     #dbeafe;
+    --verde-seguro:   #059669;
+    --verde-suave:    #d1fae5;
+    --amarelo-alerta: #d97706;
+    --amarelo-suave:  #fef3c7;
+    --vermelho-perigo:#dc2626;
+    --vermelho-suave: #fee2e2;
+    --cinza-texto:    #1e293b;
+    --cinza-suave:    #f8fafc;
+    --branco:         #ffffff;
+    --sombra-suave:   0 2px 12px rgba(15, 39, 68, 0.08);
+    --sombra-media:   0 4px 24px rgba(15, 39, 68, 0.14);
+    --borda-radius:   12px;
+    --fonte-corpo:    'DM Sans', sans-serif;
+    --fonte-titulo:   'DM Serif Display', serif;
+}
+
+/* ── Reset e Base ── */
+html, body, [class*="css"] {
+    font-family: var(--fonte-corpo) !important;
+    color: var(--cinza-texto);
+}
+
+/* ── Fundo Principal ── */
+.stApp {
+    background: linear-gradient(135deg, #f0f4ff 0%, #f8fafc 50%, #f0fdf4 100%) !important;
+    min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, var(--azul-escuro) 0%, var(--azul-medio) 100%) !important;
+    border-right: none !important;
+    box-shadow: 4px 0 24px rgba(15, 39, 68, 0.2) !important;
+}
+
+[data-testid="stSidebar"] * {
+    color: #e2eaf5 !important;
+}
+
+[data-testid="stSidebar"] h1 {
+    font-family: var(--fonte-titulo) !important;
+    font-size: 1.8rem !important;
+    color: var(--branco) !important;
+    margin-bottom: 0 !important;
+    letter-spacing: -0.5px;
+}
+
+[data-testid="stSidebar"] h3 {
+    color: #93b4d4 !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] li {
+    font-size: 0.88rem !important;
+    line-height: 1.6 !important;
+    color: #bdd3e8 !important;
+}
+
+[data-testid="stSidebar"] a {
+    color: #60a5fa !important;
+    text-decoration: none !important;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+[data-testid="stSidebar"] a:hover {
+    color: #93c5fd !important;
+}
+
+[data-testid="stSidebar"] hr {
+    border-color: rgba(255,255,255,0.1) !important;
+    margin: 1rem 0 !important;
+}
+
+/* ── Botões da Sidebar ── */
+[data-testid="stSidebar"] .stButton > button {
+    background: rgba(255,255,255,0.08) !important;
+    color: #e2eaf5 !important;
+    border: 1px solid rgba(255,255,255,0.15) !important;
+    border-radius: 8px !important;
+    font-size: 0.85rem !important;
+    padding: 0.4rem 1rem !important;
+    width: 100% !important;
+    transition: all 0.2s !important;
+    font-family: var(--fonte-corpo) !important;
+}
+
+[data-testid="stSidebar"] .stButton > button:hover {
+    background: rgba(255,255,255,0.15) !important;
+    border-color: rgba(255,255,255,0.3) !important;
+}
+
+/* Botão Pânico em destaque */
+[data-testid="stSidebar"] .stButton:last-of-type > button {
+    background: rgba(220, 38, 38, 0.2) !important;
+    border-color: rgba(220, 38, 38, 0.5) !important;
+    color: #fca5a5 !important;
+}
+
+[data-testid="stSidebar"] .stButton:last-of-type > button:hover {
+    background: rgba(220, 38, 38, 0.35) !important;
+}
+
+/* ── Cabeçalho Principal ── */
+.stApp > div > div > div > div > div > h1,
+h1 {
+    font-family: var(--fonte-titulo) !important;
+    color: var(--azul-escuro) !important;
+    font-size: 2.2rem !important;
+    letter-spacing: -0.5px !important;
+}
+
+/* ── Área de Chat ── */
+[data-testid="stChatMessageContainer"] {
+    padding: 0.5rem 0 !important;
+}
+
+/* Mensagem do Usuário */
+[data-testid="stChatMessage"][data-testid*="user"],
+div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+    background: var(--azul-suave) !important;
+    border-radius: var(--borda-radius) !important;
+    border-left: 4px solid var(--azul-claro) !important;
+    padding: 1rem !important;
+    margin-bottom: 0.75rem !important;
+    box-shadow: var(--sombra-suave) !important;
+}
+
+/* Mensagem da IA */
+[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
+    background: var(--branco) !important;
+    border-radius: var(--borda-radius) !important;
+    border-left: 4px solid var(--verde-seguro) !important;
+    padding: 1rem !important;
+    margin-bottom: 0.75rem !important;
+    box-shadow: var(--sombra-suave) !important;
+}
+
+/* ── Caixa de Input ── */
+[data-testid="stChatInput"] {
+    border-radius: var(--borda-radius) !important;
+    border: 2px solid #c7d7f0 !important;
+    background: var(--branco) !important;
+    box-shadow: var(--sombra-suave) !important;
+    transition: border-color 0.2s !important;
+    font-family: var(--fonte-corpo) !important;
+}
+
+[data-testid="stChatInput"]:focus-within {
+    border-color: var(--azul-claro) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+}
+
+/* ── Blocos de Info / Alerta ── */
+[data-testid="stInfo"] {
+    background: var(--azul-suave) !important;
+    border: 1px solid #93c5fd !important;
+    border-radius: var(--borda-radius) !important;
+    border-left: 4px solid var(--azul-claro) !important;
+    color: var(--azul-escuro) !important;
+}
+
+[data-testid="stWarning"] {
+    background: var(--amarelo-suave) !important;
+    border: 1px solid #fcd34d !important;
+    border-radius: var(--borda-radius) !important;
+    border-left: 4px solid var(--amarelo-alerta) !important;
+}
+
+[data-testid="stError"] {
+    background: var(--vermelho-suave) !important;
+    border-radius: var(--borda-radius) !important;
+    border-left: 4px solid var(--vermelho-perigo) !important;
+}
+
+[data-testid="stSuccess"] {
+    background: var(--verde-suave) !important;
+    border-radius: var(--borda-radius) !important;
+    border-left: 4px solid var(--verde-seguro) !important;
+}
+
+/* ── Botão de Download ── */
+.stDownloadButton > button {
+    background: linear-gradient(135deg, var(--verde-seguro), #047857) !important;
+    color: var(--branco) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    padding: 0.6rem 1.5rem !important;
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3) !important;
+    transition: all 0.2s !important;
+    font-family: var(--fonte-corpo) !important;
+}
+
+.stDownloadButton > button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 16px rgba(5, 150, 105, 0.4) !important;
+}
+
+/* ── Spinner ── */
+[data-testid="stSpinner"] {
+    color: var(--azul-claro) !important;
+}
+
+/* ── Expander ── */
+[data-testid="stExpander"] {
+    background: var(--branco) !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: var(--borda-radius) !important;
+    box-shadow: var(--sombra-suave) !important;
+}
+
+/* ── Caption / Rodapé ── */
+[data-testid="stCaptionContainer"] {
+    color: #64748b !important;
+    font-size: 0.8rem !important;
+    background: rgba(255,255,255,0.6) !important;
+    padding: 0.4rem 0.8rem !important;
+    border-radius: 6px !important;
+    display: inline-block !important;
+}
+
+/* ── Markdown dentro do chat ── */
+.stMarkdown h3 {
+    color: var(--azul-escuro) !important;
+    font-family: var(--fonte-titulo) !important;
+    font-size: 1.15rem !important;
+    margin-top: 1.2rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.stMarkdown strong {
+    color: var(--azul-escuro) !important;
+}
+
+.stMarkdown ul, .stMarkdown ol {
+    padding-left: 1.2rem !important;
+}
+
+.stMarkdown li {
+    margin-bottom: 0.3rem !important;
+    line-height: 1.6 !important;
+}
+
+/* ── Scrollbar Personalizada ── */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c7d7f0;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--azul-claro);
+}
+
+/* ── Badge de confidencialidade ── */
+.badge-confidencial {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--verde-suave);
+    color: #065f46;
+    border: 1px solid #6ee7b7;
+    border-radius: 20px;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* ── Responsividade ── */
+@media (max-width: 768px) {
+    h1 { font-size: 1.6rem !important; }
+    [data-testid="stChatMessage"] { padding: 0.75rem !important; }
+}

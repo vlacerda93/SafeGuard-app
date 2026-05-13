@@ -1,0 +1,26 @@
+# Plano de Ação - Atualizações 13/05 (Mesclando Streamlit att1305 com Reflex core)
+
+**Objetivo:** Integrar as novas funcionalidades e melhorias de código desenvolvidas em Streamlit (pasta `att1305`) para a aplicação oficial em Reflex (`safeguardapp`), mantendo as regras de negócio e estabilidade existentes.
+
+## 1. Atualização dos Prompts (`core/prompts.py`)
+- **Mesclar Prompts:** Integrar a estrutura mais detalhada de `att1305/prompts.py` (Acolhimento, Análise, Base Legal, etc.) com o atual `core/prompts.py`.
+- **Manter Regras Anteriores:** É crucial preservar as instruções recentes: **NÃO** usar o título "Acolhimento Empático" explicitamente na resposta gerada e usar **apenas termos qualitativos** para probabilidade (ex: "possibilidade remota", "grande possibilidade" em vez de porcentagens exatas).
+- **Adicionar Novos Prompts:** Trazer o `SYSTEM_PROMPT_ANONIMIZACAO` para o core.
+
+## 2. Motor da IA (`core/engine.py`)
+- **Fallback de Modelos:** Implementar a lógica de tentativa múltipla com os modelos (Llama 3.3 70b, Mixtral, etc.) criada em `att1305/engine.py` para maior resiliência.
+- **Validação de Entrada:** Trazer a função `validar_relato` para evitar processar inputs muito curtos ou muito longos.
+- **Anonimização Aprimorada:** Atualizar a função `anonimizar` para usar a dupla camada (Regex + LLM) presente em `att1305/engine.py`.
+- **Manter RAG (Doutrina):** Garantir que a leitura do arquivo `doutrina_trabalhista.txt` (que já existia no core) seja mantida durante a mesclagem.
+
+## 3. Geração de Documentos (PDF e TXT)
+- **Implementar Gerador PDF:** Adaptar a função `gerar_pdf_profissional` (usando `reportlab` e `fpdf2`) para funcionar com os downloads do Reflex (`rx.download` no frontend).
+- **Exportação TXT:** Adicionar a funcionalidade de baixar a análise e o esqueleto em formato `.txt`.
+- **Dependências:** Adicionar `reportlab` e `fpdf2` no `requirements.txt`.
+
+## 4. Atualizações na Interface Reflex (`safeguardapp/safeguardapp.py`)
+- **Botões de Exportação:** Criar botões na interface do Reflex para baixar o PDF e o TXT do esqueleto/análise, aparecendo ao lado ou embaixo do esqueleto.
+- **Métricas de Sensibilidade:** Trazer a função `detectar_termos_sensiveis` de `att1305/app.py` e exibi-los (ex: Assédio Moral, Sexual, Discriminação) como badges/tags na interface.
+- **Toggle de Anonimização:** Adicionar uma opção no estado (State) e na interface para que o usuário possa escolher se quer anonimizar os dados antes do envio.
+- **Botão de Pânico:** Adicionar o botão "🚨 Pânico" que limpa a sessão imediatamente e muda de página.
+- **Validação no Chat:** Usar o `validar_relato` no método `answer` antes de chamar a IA, exibindo uma mensagem na tela se a entrada for inválida.
