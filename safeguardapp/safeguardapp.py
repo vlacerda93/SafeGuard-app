@@ -108,7 +108,7 @@ def info_card(title: str, text: str, icon: str):
     return rx.vstack(
         rx.icon(icon, size=24, color="violet"),
         rx.text(title, font_weight="bold", color="white", size="3"),
-        rx.text(text, color="gray.300", size="2"),
+        rx.text(text, color="#d1d5db", size="2"),
         padding="20px",
         bg="rgba(15, 23, 42, 0.6)",
         backdrop_filter="blur(8px)",
@@ -124,7 +124,7 @@ def onboarding_screen():
     return rx.center(
         rx.vstack(
             rx.heading("🛡️ SafeGuard", size="9", color="white", margin_bottom="10px"),
-            rx.text("Plataforma destinada a diminuir dúvidas e orientar quanto a casos de assédio.", color="gray.300", size="4"),
+            rx.text("Plataforma destinada a diminuir dúvidas e orientar quanto a casos de assédio.", color="#d1d5db", size="4"),
             rx.divider(margin_y="20px", border_color="rgba(255, 255, 255, 0.1)"),
             rx.hstack(
                 info_card("Privacidade", "Sem login, sem rastros.", "shield"),
@@ -244,7 +244,7 @@ def chat_ui():
                     on_change=State.toggle_anonimizar,
                     color_scheme="indigo",
                 ),
-                rx.text("Anonimizar", color="gray.400", size="1"),
+                rx.text("Anonimizar", color="#9ca3af", size="1"),
                 align_items="center",
                 spacing="1"
             ),
@@ -265,7 +265,7 @@ def chat_ui():
                 State.termos_sensiveis.length() > 0,
                 rx.hstack(
                     rx.icon("alert-triangle", size=14, color="orange"),
-                    rx.text("Categorias detectadas:", color="gray.400", size="1"),
+                    rx.text("Categorias detectadas:", color="#9ca3af", size="1"),
                     rx.foreach(
                         State.termos_sensiveis,
                         lambda termo: rx.badge(termo, color_scheme="orange", size="1")
@@ -287,7 +287,7 @@ def chat_ui():
                 rx.scroll_area(
                     rx.box(
                         rx.markdown(State.esqueleto),
-                        color="gray.300",
+                        color="#d1d5db",
                         font_size="0.9rem",
                     ),
                     height="calc(100vh - 120px)",
