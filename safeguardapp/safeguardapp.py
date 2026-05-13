@@ -25,11 +25,7 @@ class State(rx.State):
     current_message: str = ""
     processing: bool = False
     esqueleto: str = ""  # Armazena o resumo/esqueleto da denúncia
-    anonimizar_ativo: bool = True
     termos_sensiveis: list[str] = []
-
-    def toggle_anonimizar(self, value: bool):
-        self.anonimizar_ativo = value
 
     def panic_button(self):
         self.reset_session()
@@ -236,17 +232,6 @@ def chat_ui():
                 padding="16px",
                 min_height="80px",
                 resize="none",
-            ),
-            rx.vstack(
-                rx.switch(
-                    name="anonimizar",
-                    checked=State.anonimizar_ativo,
-                    on_change=State.toggle_anonimizar,
-                    color_scheme="indigo",
-                ),
-                rx.text("Anonimizar", color="#9ca3af", size="1"),
-                align_items="center",
-                spacing="1"
             ),
                 rx.button(
                     rx.cond(State.processing, rx.spinner(size="2"), rx.icon("send")),
